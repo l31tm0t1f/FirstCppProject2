@@ -68,6 +68,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class AFirstCppProject2Projectile> ProjectileClass;
 
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class ACppBullet2> BulletClass;
+
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	class USoundBase* FireSound;
@@ -84,6 +88,9 @@ protected:
 	
 	/** Fires a projectile. */
 	void OnFire();
+
+	/** Fires another projectile. */
+	void OnSecondFire();
 
 	/** Resets HMD orientation and position in VR. */
 	void OnResetVR();

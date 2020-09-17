@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
+#include <FirstCppProject2\CppBullet2.h>
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -119,6 +120,7 @@ void AFirstCppProject2Character::SetupPlayerInputComponent(class UInputComponent
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFirstCppProject2Character::OnFire);
+	PlayerInputComponent->BindAction("SecondFire", IE_Pressed, this, &AFirstCppProject2Character::OnSecondFire);
 
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
@@ -184,6 +186,16 @@ void AFirstCppProject2Character::OnFire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
+}
+
+void AFirstCppProject2Character::OnSecondFire()
+{
+	UWorld* const World = GetWorld();
+	FTransform SpawnTransform = GetActorTransform();
+	SpawnTransform.SetLocation(SpawnTransform.GetLocation().ForwardVector * 200.f + SpawnTransform.GetLocation());
+
+	World->SpawnActor<ACppBullet2>(BulletClass, SpawnTransform);
+
 }
 
 void AFirstCppProject2Character::OnResetVR()
